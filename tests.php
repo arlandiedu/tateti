@@ -18,6 +18,20 @@
 
 */
 
+/** Determina si un numero esta entre el rango de 1 y 7, en caso de ser valido devuelve el numero ingresado.
+ * Si el numero no es valido, sigue pidiendo un numero hasta que el ingresado este dentro de los parametros esperados (1-7) 
+ * @param $numOpcion
+ * @return INT
+*/
+function numeroValido($numOpcionUser){
+
+    while($numOpcionUser<= 1 || $numOpcionUser>7){
+        echo "El numero ingresado es incorecto, ingrese nuevamente su opcion numerica: ";
+        $numOpcionUser = trim(fgets(STDIN));
+}
+return $numOpcionUser;
+}
+
 /** Dispone un menu del juego tateti con diferentes opciones
 * @param ARRAY $menuOpciones
 * @return ARRAY
@@ -42,31 +56,9 @@ function seleccionarOpciones (){
 
     echo "Elija el numero de la opcion deseada (1 - 7)"."\n";
     $numOpcionUser = trim(fgets(STDIN));
-    $numOpcionUserValido = numeroValido($numOpcionUser); // Consultamos con la funcion para saber si esta entre 1 y 7
+    $numOpcionUserValido = numeroValido($numOpcionUser); // Consultamos si el numero esta dentro de los rangos, en caso de no estarlo.. la funcion entra en loop hasta que se elige la opcion correcta.
 
-    while(!$numOpcionUserValido){
-
-        echo "El numero ingresado no es valido, ingrese nuevamente su opcion: "."\n";
-        $numOpcionUser = trim(fgets(STDIN));    
-        $numOpcionUserValido = numeroValido($numOpcionUser);
-    }
-
-return $menuOpciones[$numOpcionUser];
-}
-
-/** Determina si un numero esta en el rango de 1-7 y devuelve un booleano true en caso de estarlo 
- * @param $numOpcion
- * @return Boolean
-*/
-function numeroValido ($numOpcion){
-// Variable interna BOOLEANA $valido
-
-    $valido = false;
-
-    if ($numOpcion>=1 && $numOpcion<=7){
-        $valido = true;
-    }
-return $valido;
+return $menuOpciones[$numOpcionUserValido];
 }
 
 
@@ -76,3 +68,4 @@ return $valido;
 echo "JUEGO TATETI"."\n";
 $opcionElegidaUser = seleccionarOpciones();
 echo $opcionElegidaUser."\n";
+
