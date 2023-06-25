@@ -13,9 +13,25 @@ include_once("tateti.php");
                     /***** DEFINICION DE FUNCIONES ********/
                     /**************************************/
 
+function cargarJuegos(){
+
+    $coleccionJuegos[0] = ["jugadorCruz"=> "Sandra" , "jugadorCirculo" => "Mario", "puntosCruz"=> 5, "puntosCirculo" => 0];
+    $coleccionJuegos[1] = ["jugadorCruz"=> "Mario" , "jugadorCirculo" => "Sandra", "puntosCruz"=> 1, "puntosCirculo”" => 1];
+    $coleccionJuegos[2] = ["jugadorCruz"=> "German" , "jugadorCirculo" => "Roberto", "puntosCruz"=> 2, "puntosCirculo" => 0];
+    $coleccionJuegos[3] = ["jugadorCruz"=> "Lucas" , "jugadorCirculo" => "Alberto", "puntosCruz"=> 1, "puntosCirculo" => 1];
+    $coleccionJuegos[4] = ["jugadorCruz"=> "Violeta" , "jugadorCirculo" => "Ana", "puntosCruz"=> 0, "puntosCirculo" => 0];
+    $coleccionJuegos[5] = ["jugadorCruz"=> "Lucia" , "jugadorCirculo" => "Jazmin", "puntosCruz"=> 2, "puntosCirculo" => 0];
+    $coleccionJuegos[6] = ["jugadorCruz"=> "Romina" , "jugadorCirculo" => "German", "puntosCruz"=> 1, "puntosCirculo" => 1];
+    $coleccionJuegos[7] = ["jugadorCruz"=> "Jennifer" , "jugadorCirculo" => "Alberto", "puntosCruz"=> 5, "puntosCirculo" => 0];
+    $coleccionJuegos[8] = ["jugadorCruz"=> "Alberto" , "jugadorCirculo" => "Sandra", "puntosCruz"=> 0, "puntosCirculo" => 2];
+    $coleccionJuegos[9] = ["jugadorCruz"=> "Roberto" , "jugadorCirculo" => "Mario", "puntosCruz"=> 0, "puntosCirculo" => 5];
+                    
+    return $coleccionJuegos;
+}     
+
 /** Determina si $num esta entre el rango de 1 y 7, en caso de ser valido devuelve el numero ingresado.
  * Si el numero no es valido, sigue pidiendo un numero hasta que el ingresado este dentro de los parametros esperados (1-7) 
- * @param $opcionUser
+ * @param $num
  * @return INT
 */
 function numeroValido($num){
@@ -42,13 +58,21 @@ function seleccionarOpciones (){
     echo "6) Mostrar listado de juegos ordenados por jugador O"."\n";
     echo "7) Salir!"."\n";
 
-    echo "Elija el numero de la opcion deseada (1 - 7)"."\n";
     $opcionUserFuncion = trim(fgets(STDIN));
     $OpcionUserValido = numeroValido($opcionUserFuncion); // Preguntar a los profes si es valida funcion dentro de funcion..
 
 return $OpcionUserValido; // Debe retornar el numero del menu elegido.
 }
 
+function mostrarDatosJuego ($arrayJuego){ // probando
+
+
+echo "********************"."\n";
+echo "Juego de tateti numero: "."\n";//no se como contar los juegos todavia
+echo "Jugador X: ".$arrayJuego["jugadorCruz"]."obtuvo".$arrayJuego["puntosCruz"]."puntos"."\n"; // hay que arreglar que se muestran pegados
+echo "Jugador O: ".$arrayJuego["jugadorCirculo"]."obtuvo".$arrayJuego["puntosCirculo"]."puntos"."\n";
+echo "********************"."\n";
+}
 
 
 
@@ -69,24 +93,25 @@ return $OpcionUserValido; // Debe retornar el numero del menu elegido.
 //imprimirResultado($juego);
 
 echo "Juego del TaTeTi"."\n";
+echo "Elija con el numero correspondiente de su teclado, la opcion que desea: "."\n";
 echo "\n";
 
-$opcionUser = seleccionarOpciones();
-
+$opcion = seleccionarOpciones();
 
 do {
-    $opcion = $opcionUser;
-
-    
     switch ($opcion) {
         case 1: 
             //El usuario eligio la opcion de: 'Jugar al tateti'
-            $juego = jugar();
+            $juego = jugar(); // $juego es un arreglo asociativo, en la funcion tateti nos devuelve la informacion de jugador y puntos
+            print_r($juego);
+            imprimirResultado($juego);
             break;
+
         case 2: 
             //El usuario eligio la opcion de: 'Mostrar un juego'
-            echo "prueba mostrando un juego";
+            $mostrarJuego = mostrarDatosJuego($juego);
             break;
+
         case 3: 
             //El usuario eligio la opcion de: 'Mostrar el primer juego ganador' 
 
@@ -103,6 +128,7 @@ do {
                 //El usuario eligio la opcion de: 'Mostrar listado de juegos ordenados por jugador O'
         
             break;
-        
     }
+    $opcion = seleccionarOpciones();
+
 } while ($opcion != 7);
