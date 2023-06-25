@@ -13,6 +13,13 @@ include_once("tateti.php");
                     /***** DEFINICION DE FUNCIONES ********/
                     /**************************************/
 
+/**
+ * -- PRIMER PUNTO DEL TRABAJO PRACTICO  --
+ * Funcion destinada a la carga de juegos de array multidimensional para usarlos de ejemplos.
+ * Al no tener un parametro formal, la declaracion de parametros esta vacia
+ * @return ARRAY
+ */
+
 function cargarJuegos(){
 
     $coleccionJuegos[0] = ["jugadorCruz"=> "Sandra" , "jugadorCirculo" => "Mario", "puntosCruz"=> 5, "puntosCirculo" => 0];
@@ -29,25 +36,13 @@ function cargarJuegos(){
     return $coleccionJuegos;
 }     
 
-/** Determina si $num esta entre el rango de 1 y 7, en caso de ser valido devuelve el numero ingresado.
- * Si el numero no es valido, sigue pidiendo un numero hasta que el ingresado este dentro de los parametros esperados (1-7) 
- * @param $num
- * @return INT
-*/
-function numeroValido($num){
-
-    while($num<1 || $num>7){
-        echo "El numero ingresado es incorrecto, ingrese nuevamente la opcion deseada: ";
-        $num = trim(fgets(STDIN));
-}
-return $num;
-}
-
-
-/** Dispone un menu del juego tateti con diferentes opciones
+/**
+ * --   SEGUNDO PUNTO DEL TRABAJO PRACTICO   --
+ *  Dispone un menu del juego tateti con diferentes opciones
 * Al no tener un parametro formal, la declaracion de parametros esta vacia
 * @return INT
 */
+
 function seleccionarOpciones (){
 
     echo "1) Jugar al tateti"."\n";
@@ -64,8 +59,31 @@ function seleccionarOpciones (){
 return $OpcionUserValido; // Debe retornar el numero del menu elegido.
 }
 
-function mostrarDatosJuego ($arrayJuego){ // probando
+/** 
+ * -- TERCER PUNTO DEL TRABAJO PRACTICO --
+ * Determina si $num esta entre el rango de 1 y 7, en caso de ser valido devuelve el numero ingresado.
+ * Si el numero no es valido, sigue pidiendo un numero hasta que el ingresado este dentro de los parametros esperados (1-7) 
+ * @param $num
+ * @return INT
+*/
 
+function numeroValido($num){
+
+    while($num<1 || $num>7){
+        echo "El numero ingresado es incorrecto, ingrese nuevamente la opcion deseada: ";
+        $num = trim(fgets(STDIN));
+}
+return $num;
+}
+
+/**  
+ * -- CUARTO PUNTO DEL TRABAJO PRACTICO -- 
+ * Usando un array con informacion guardada, disponemos a mostrarlo en detalle con esta funcion
+* @param ARRAY $arrayJuego
+* @return
+*/
+
+function mostrarDatosJuego ($arrayJuego){ // probando
 
 echo "********************"."\n";
 echo "Juego de tateti numero: "."\n";//no se como contar los juegos todavia
@@ -97,6 +115,7 @@ echo "Elija con el numero correspondiente de su teclado, la opcion que desea: ".
 echo "\n";
 
 $opcion = seleccionarOpciones();
+$juego = cargarJuegos();
 
 do {
     switch ($opcion) {
