@@ -69,7 +69,7 @@ return $OpcionUserValido; // Debe retornar el numero del menu elegido.
 
 function numeroValidoUnoSiete($num){
 
-     $num = solicitarNumeroEntre(1,7);
+     $num = solicitarNumeroEntre(1,7); // Aca reutilizamos.
 
 return $num;
 }
@@ -89,6 +89,118 @@ echo "Jugador X: ".$arrayJuego["jugadorCruz"]."obtuvo".$arrayJuego["puntosCruz"]
 echo "Jugador O: ".$arrayJuego["jugadorCirculo"]."obtuvo".$arrayJuego["puntosCirculo"]."puntos"."\n";
 echo "********************"."\n";
 }
+
+//5
+
+
+//6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
@@ -141,6 +253,136 @@ function solicitarSimbolo () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -162,7 +404,6 @@ echo "Elija con el numero correspondiente de su teclado, la opcion que desea: ".
 echo "\n";
 
 $opcion = seleccionarOpciones();
-$juego = cargarJuegos();
 
 do {
     switch ($opcion) {
