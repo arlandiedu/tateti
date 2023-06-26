@@ -94,6 +94,55 @@ echo "********************"."\n";
 
 
 
+
+// 7)
+
+/**
+ * @param int $coleccionJuegos
+ * @param string $nombreJugador
+ * @param return $jugador
+ */
+function resumenJugador ($coleccionJuegos , $nombreJugador){
+
+    $jugador = array (
+        "nombre" => $nombreJugador,
+        "juegosGanados" => $juegosGanados,
+        "juegosPerdidos" => $juegosPerdidos,
+        "juegosEmpatados" => $juegosEmpatados,
+        "puntosAcumulados" => $puntosAcumulados);
+
+return $jugador;
+
+}
+
+// 8)
+
+/**
+ * @param 
+ * @param return $simbolo
+ */
+ 
+function solicitarSimbolo () {
+    while (true) {
+        echo "ingrese un simbolo (X / O): ";
+        $simbolo = trim(fgets(STDIN));
+        if ((strtoupper($simbolo) === "X" || strtoupper($simbolo) === "X")){
+            return strtoupper($simbolo);
+        } else {
+            echo "Simbolo invalido. Por favor ingrese X ó O \n";
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
