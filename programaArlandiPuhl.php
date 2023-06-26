@@ -54,7 +54,7 @@ function seleccionarOpciones (){
     echo "7) Salir!"."\n";
 
     $opcionUserFuncion = trim(fgets(STDIN));
-    $OpcionUserValido = numeroValido($opcionUserFuncion); // Preguntar a los profes si es valida funcion dentro de funcion..
+    $OpcionUserValido = numeroValidoUnoSiete($opcionUserFuncion); // Preguntar a los profes si es valida funcion dentro de funcion..
 
 return $OpcionUserValido; // Debe retornar el numero del menu elegido.
 }
@@ -67,12 +67,10 @@ return $OpcionUserValido; // Debe retornar el numero del menu elegido.
  * @return INT
 */
 
-function numeroValido($num){
+function numeroValidoUnoSiete($num){
 
-    while($num<1 || $num>7){
-        echo "El numero ingresado es incorrecto, ingrese nuevamente la opcion deseada: ";
-        $num = trim(fgets(STDIN));
-}
+     $num = solicitarNumeroEntre(1,7);
+
 return $num;
 }
 
@@ -170,14 +168,12 @@ do {
     switch ($opcion) {
         case 1: 
             //El usuario eligio la opcion de: 'Jugar al tateti'
-            $juego = jugar(); // $juego es un arreglo asociativo, en la funcion tateti nos devuelve la informacion de jugador y puntos
-            print_r($juego);
-            imprimirResultado($juego);
+            $coleccionJuegos = jugar(); 
+            imprimirResultado($coleccionJuegos);
             break;
 
         case 2: 
             //El usuario eligio la opcion de: 'Mostrar un juego'
-            $mostrarJuego = mostrarDatosJuego($juego);
             break;
 
         case 3: 
