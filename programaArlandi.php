@@ -70,28 +70,29 @@ return $opcionUserValido; // Debe retornar el numero del menu elegido.
 
 /**  
  * -- CUARTO PUNTO DEL TRABAJO PRACTICO -- 
- * Usando un array con informacion guardada, disponemos a mostrarlo en detalle con esta funcion
-* @param ARRAY $arrayJuego
-* @param INT $numeroJuegoSolicitado
+ * Recibimos por usuario el numero del juego solicitado junto con el arr
+ * muestra por pantalla
+* @param ARRAY $listadeArrays
+* @param INT $indiceJuego
 * @return void
 */
 
-function mostrarDatosJuego ($arrayJuego,$numeroJuegoSolicitado){ //
+function mostrarDatosJuego ($listadeArrays,$indiceJuego){ //
 
 $resultado = "";
 
-    if($arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]>$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]){
+    if($listadeArrays[$indiceJuego]["puntosCruz"]>$listadeArrays[$indiceJuego]["puntosCirculo"]){
         $resultado = "Gano Cruz (X)";
-    }elseif ($arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]<$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]) {
+    }elseif ($listadeArrays[$indiceJuego]["puntosCruz"]<$listadeArrays[$indiceJuego]["puntosCirculo"]) {
         $resultado = "Gano Circulo (O)";
-    }elseif ($arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]==$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]) {
+    }elseif ($listadeArrays[$indiceJuego]["puntosCruz"]==$listadeArrays[$indiceJuego]["puntosCirculo"]) {
         $resultado = "Empate";
     }
 
 echo "********************"."\n";
-echo "Juego de tateti numero: ".($numeroJuegoSolicitado+1)."     ($resultado)"."\n"; // Aca sumo para devlover al usuario el numero del juego real y no mi indice .
-echo "Jugador X: ".$arrayJuego[$numeroJuegoSolicitado]["jugadorCruz"]." obtuvo ".$arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]." puntos"."\n";
-echo "Jugador O: ".$arrayJuego[$numeroJuegoSolicitado]["jugadorCirculo"]." obtuvo ".$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]." puntos"."\n";
+echo "Juego de tateti numero: ".($indiceJuego+1)."     ($resultado)"."\n"; // Aca sumo para devlover al usuario el numero del juego real y no mi indice .
+echo "Jugador X: ".$listadeArrays[$indiceJuego]["jugadorCruz"]." obtuvo ".$listadeArrays[$indiceJuego]["puntosCruz"]." puntos"."\n";
+echo "Jugador O: ".$listadeArrays[$indiceJuego]["jugadorCirculo"]." obtuvo ".$listadeArrays[$indiceJuego]["puntosCirculo"]." puntos"."\n";
 echo "********************"."\n";
 }
 
@@ -181,7 +182,7 @@ do {
         case 2: 
             //El usuario eligio la opcion de: 'Mostrar un juego'
             echo "Ingrese el numero del JUEGO que quiere ver";
-            $juegoAmostrar = solicitarNumeroEntre (1,count($juegos)); // Uso count para saber la cantidad de indices de los que dispongo en el momento del request
+            $juegoAmostrar = solicitarNumeroEntre(1,count($juegos)); // Uso count para saber la cantidad de indices de los que dispongo en el momento del request
             mostrarDatosJuego($juegos,($juegoAmostrar-1)); // Resto 1 para acceder al indice 0 ya que el usuario no trabajo con indices, solo con el numero del juego. Mi primero juego es el indice 0 y no 1
             break;
         case 3: 
