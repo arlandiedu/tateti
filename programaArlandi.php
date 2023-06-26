@@ -53,147 +53,47 @@ function seleccionarOpciones (){
     echo "6) Mostrar listado de juegos ordenados por jugador O"."\n";
     echo "7) Salir!"."\n";
 
-    $opcionUserFuncion = trim(fgets(STDIN));
-    $OpcionUserValido = numeroValidoUnoSiete($opcionUserFuncion); // Preguntar a los profes si es valida funcion dentro de funcion..
 
-return $OpcionUserValido; // Debe retornar el numero del menu elegido.
+    $opcionUserValido = solicitarNumeroEntre(1,7); // Preguntar a los profes si es valida funcion dentro de funcion..
+
+return $opcionUserValido; // Debe retornar el numero del menu elegido.
 }
 
 /** 
  * -- TERCER PUNTO DEL TRABAJO PRACTICO --
- * Determina si $num esta entre el rango de 1 y 7, en caso de ser valido devuelve el numero ingresado.
- * Si el numero no es valido, sigue pidiendo un numero hasta que el ingresado este dentro de los parametros esperados (1-7) 
- * @param $num
- * @return INT
-*/
+ * 
+ * Aca reutilizamos la funcion solicitarNumeroEntre($min,$max) del archivo tateti.php
+ * Nos devuelve un numero valido segun los parametros formales que hayamos ingresado, en este caso seria 1 - 7
+ */
 
-function numeroValidoUnoSiete($num){
 
-     $num = solicitarNumeroEntre(1,7); // Aca reutilizamos.
-
-return $num;
-}
 
 /**  
  * -- CUARTO PUNTO DEL TRABAJO PRACTICO -- 
  * Usando un array con informacion guardada, disponemos a mostrarlo en detalle con esta funcion
 * @param ARRAY $arrayJuego
-* @return
+* @param INT $numeroJuegoSolicitado
+* @return void
 */
 
-function mostrarDatosJuego ($arrayJuego){ // probando
+function mostrarDatosJuego ($arrayJuego,$numeroJuegoSolicitado){ //
+
+$resultado = "";
+
+    if($arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]>$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]){
+        $resultado = "Gano Cruz (X)";
+    }elseif ($arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]<$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]) {
+        $resultado = "Gano Circulo (O)";
+    }elseif ($arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]==$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]) {
+        $resultado = "Empate";
+    }
 
 echo "********************"."\n";
-echo "Juego de tateti numero: "."\n";//no se como contar los juegos todavia
-echo "Jugador X: ".$arrayJuego["jugadorCruz"]."obtuvo".$arrayJuego["puntosCruz"]."puntos"."\n"; // hay que arreglar que se muestran pegados
-echo "Jugador O: ".$arrayJuego["jugadorCirculo"]."obtuvo".$arrayJuego["puntosCirculo"]."puntos"."\n";
+echo "Juego de tateti numero: ".($numeroJuegoSolicitado+1)."     ($resultado)"."\n"; // Aca sumo para devlover al usuario el numero del juego real y no mi indice .
+echo "Jugador X: ".$arrayJuego[$numeroJuegoSolicitado]["jugadorCruz"]." obtuvo ".$arrayJuego[$numeroJuegoSolicitado]["puntosCruz"]." puntos"."\n";
+echo "Jugador O: ".$arrayJuego[$numeroJuegoSolicitado]["jugadorCirculo"]." obtuvo ".$arrayJuego[$numeroJuegoSolicitado]["puntosCirculo"]." puntos"."\n";
 echo "********************"."\n";
 }
-
-//5
-
-
-//6
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -245,144 +145,6 @@ function solicitarSimbolo () {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -404,19 +166,24 @@ echo "Elija con el numero correspondiente de su teclado, la opcion que desea: ".
 echo "\n";
 
 $opcion = seleccionarOpciones();
+$juegos = cargarJuegos();
 
 do {
     switch ($opcion) {
         case 1: 
             //El usuario eligio la opcion de: 'Jugar al tateti'
-            $coleccionJuegos = jugar(); 
-            imprimirResultado($coleccionJuegos);
+            $nuevoJuego = jugar();  //array asociativo
+            $nuevoIndice = count($juegos); // Aca contamos la cantidad de indices que hay para reutilizarlo.
+            $juegos[$nuevoIndice] = $nuevoJuego; // Aca le agregamos el nuevo elemento a nuestro array.
+            //array_push($juegos, $nuevoJuego); // OTRA FORMA
             break;
 
         case 2: 
             //El usuario eligio la opcion de: 'Mostrar un juego'
+            echo "Ingrese el numero del JUEGO que quiere ver";
+            $juegoAmostrar = solicitarNumeroEntre (1,count($juegos)); // Uso count para saber la cantidad de indices de los que dispongo en el momento del request
+            mostrarDatosJuego($juegos,($juegoAmostrar-1)); // Resto 1 para acceder al indice 0 ya que el usuario no trabajo con indices, solo con el numero del juego. Mi primero juego es el indice 0 y no 1
             break;
-
         case 3: 
             //El usuario eligio la opcion de: 'Mostrar el primer juego ganador' 
 
