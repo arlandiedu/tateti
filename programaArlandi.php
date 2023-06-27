@@ -13,8 +13,9 @@ include_once("tateti.php");
                     /***** DEFINICION DE FUNCIONES ********/
                     /**************************************/
 
-/**
- * -- PRIMER PUNTO DEL TRABAJO PRACTICO  --
+//                  -- PRIMER PUNTO DEL TRABAJO PRACTICO  --
+
+ /**                      
  * Funcion destinada a la carga de juegos de array multidimensional para usarlos de ejemplos.
  * Al no tener un parametro formal, la declaracion de parametros esta vacia
  * @return ARRAY
@@ -36,9 +37,11 @@ function cargarJuegos(){
     return $coleccionJuegos;
 }     
 
-/**
- * --   SEGUNDO PUNTO DEL TRABAJO PRACTICO   --
- *  Dispone un menu del juego tateti con diferentes opciones
+
+   //              --   SEGUNDO PUNTO DEL TRABAJO PRACTICO   --\
+
+/** 
+*  Dispone un menu del juego tateti con diferentes opciones
 * Al no tener un parametro formal, la declaracion de parametros esta vacia
 * @return INT
 */
@@ -53,8 +56,7 @@ function seleccionarOpciones (){
     echo "6) Mostrar listado de juegos ordenados por jugador O"."\n";
     echo "7) Salir!"."\n";
 
-
-    $opcionUserValido = solicitarNumeroEntre(1,7); // Preguntar a los profes si es valida funcion dentro de funcion..
+    $opcionUserValido = solicitarNumeroEntre(1,7); // Reutilizamos la funcion del archivo tateti.php
 
 return $opcionUserValido; // Debe retornar el numero del menu elegido.
 }
@@ -85,7 +87,7 @@ $resultado = "";
         $resultado = "Gano Cruz (X)";
     }elseif ($listadeArrays[$indiceJuego]["puntosCruz"]<$listadeArrays[$indiceJuego]["puntosCirculo"]) {
         $resultado = "Gano Circulo (O)";
-    }elseif ($listadeArrays[$indiceJuego]["puntosCruz"]==$listadeArrays[$indiceJuego]["puntosCirculo"]) {
+    }else {
         $resultado = "Empate";
     }
 
@@ -101,49 +103,6 @@ echo "********************"."\n";
 // ----------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-// 7)
-
-/**
- * @param int $coleccionJuegos
- * @param string $nombreJugador
- * @param return $jugador
- */
-function resumenJugador ($coleccionJuegos , $nombreJugador){
-
-    $jugador = array (
-        "nombre" => $nombreJugador,
-        "juegosGanados" => $juegosGanados,
-        "juegosPerdidos" => $juegosPerdidos,
-        "juegosEmpatados" => $juegosEmpatados,
-        "puntosAcumulados" => $puntosAcumulados);
-
-return $jugador;
-
-}
-
-// 8)
-
-/**
- * @param 
- * @param return $simbolo
- */
- 
-function solicitarSimbolo () {
-    while (true) {
-        echo "ingrese un simbolo (X / O): ";
-        $simbolo = trim(fgets(STDIN));
-        if ((strtoupper($simbolo) === "X" || strtoupper($simbolo) === "X")){
-            return strtoupper($simbolo);
-        } else {
-            echo "Simbolo invalido. Por favor ingrese X ó O \n";
-        }
-    }
-}
 
 
 /**************************************/
@@ -173,15 +132,16 @@ do {
     switch ($opcion) {
         case 1: 
             //El usuario eligio la opcion de: 'Jugar al tateti'
-            $nuevoJuego = jugar();  //array asociativo
-            $nuevoIndice = count($juegos); // Aca contamos la cantidad de indices que hay para reutilizarlo.
-            $juegos[$nuevoIndice] = $nuevoJuego; // Aca le agregamos el nuevo elemento a nuestro array.
-            //array_push($juegos, $nuevoJuego); // OTRA FORMA
+            $nuevoJuego = jugar();  // Variable que va a guardar cada juego nuevo que el usuario 
+            $nuevoIndice = count($juegos); // Creamos una nueva variable para asignarle el numero de indice actual, lo hacemos asignandole el return de la funcion count sobre $juegos.
+            $juegos[$nuevoIndice] = $nuevoJuego; // Aca le agregamos el nuevo juego (elemento) a nuestro array.
+            imprimirResultado($nuevoJuego)."\n";
+            echo "Este es el juego numero: ".($nuevoIndice+1)."\n"; // Sumamos uno porque el juego es uno mas que el indice que nosotros tenemos internamente.
             break;
 
         case 2: 
             //El usuario eligio la opcion de: 'Mostrar un juego'
-            echo "Ingrese el numero del JUEGO que quiere ver";
+            echo "Ingrese el numero del JUEGO que quiere ver: "."\n";
             $juegoAmostrar = solicitarNumeroEntre(1,count($juegos)); // Uso count para saber la cantidad de indices de los que dispongo en el momento del request
             mostrarDatosJuego($juegos,($juegoAmostrar-1)); // Resto 1 para acceder al indice 0 ya que el usuario no trabajo con indices, solo con el numero del juego. Mi primero juego es el indice 0 y no 1
             break;
