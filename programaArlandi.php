@@ -239,10 +239,7 @@ function juegosGanados($coleccionJuegos){
     
     foreach ($coleccionJuegos as $juego) {
 
-        $puntosX = $juego['puntosCruz'];
-        $puntosO = $juego['puntosCirculo'];
-
-        if ($puntosX != $puntosO) { // Si son diferentes es porque alguno gano.
+        if ($juego['puntosCruz'] != $juego['puntosCirculo']) { // Si son diferentes es porque alguno gano.
             $juegosGanados++;
         }
     }
@@ -271,9 +268,7 @@ function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
     return $juegosGanados; // Independientemente del simbolo, ya que lo verificamos con la condicion arriba, retornamos la cantidad de juegos ganados por el simbolo que viene por parametro
 }
 
-
-//$juegoUno = ["jugadorCruz"=> "Sandra" , "jugadorCirculo" => "Mario", "puntosCruz"=> 5, "puntosCirculo" => 0]; // Sandra 
-// $juegoDos= ["jugadorCruz"=> "Mario" , "jugadorCirculo" => "Sandra", "puntosCruz"=> 1, "puntosCirculo" => 1];  // Empate
+// PUNTO 11
     
 
 function ordenadoAlfabeticamente($juegoUno,$juegoDos){
@@ -300,21 +295,6 @@ function ordenarNombreO ($arrayAordenar){
 
 
 
-
-
-
-
-
-
-
-
-
-
-// ----------------------------------------------------------------------------------------------------------------------------
-
-
-
-
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -325,11 +305,6 @@ function ordenarNombreO ($arrayAordenar){
 //Inicialización de variables:
 
 
-//Proceso:
-
-//$juego = jugar();
-//print_r($juego);
-//imprimirResultado($juego);
 
 echo "Juego del TaTeTi"."\n";
 echo "Elija la opcion deseada con el numero correspondiente: "."\n";
@@ -383,10 +358,10 @@ do {
             echo "Eliga el simbolo que desea saber el porcentaje de juegos ganados: ";
             
             $simboloGanador = eleccionSimboloXO(); 
-            $cantJuegosGanados = juegosGanadosPorSimbolo ($juegos, $simboloGanador);
+            $juegosGanadosXsimbolo = juegosGanadosPorSimbolo ($juegos, $simboloGanador);
             $juegosTotales = count($juegos);
-            $juegosPerdidos = $juegosTotales - $cantJuegosGanados;
-            $porcentajeSimbolo =  $cantJuegosGanados / ($cantJuegosGanados + $juegosPerdidos);
+            $porcentajeSimbolo;
+
                                 //Juegos ganados / (juegos ganados + juegos perdidos).
             echo "El simbolo: ".$simboloGanador."gano el: ".$porcentajeSimbolo."%, de los juegos ganados";
             break;   
