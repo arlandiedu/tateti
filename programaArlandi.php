@@ -191,7 +191,7 @@ function resumenJugador($coleccionTotal, $nombreJugador) {
             $resumen['puntosAcumulados'] = $resumen['puntosAcumulados'] + $puntosX;   // En caso de ganar, sumamos los puntos otorgados
         }
 
-        if ($jugadorO == strtolower($nombreJugador)) { // Mismo caso que arriba pero analizando si el jugador le toco ser O
+        elseif ($jugadorO == strtolower($nombreJugador)) { // Mismo caso que arriba pero analizando si el jugador le toco ser O
             if ($puntosO > $puntosX) {
                 $resumen['juegosGanados'] = $resumen['juegosGanados'] + 1; // Para evitar tanto codigo, resumi con "++".
             } elseif ($puntosO < $puntosX) {
@@ -239,8 +239,8 @@ function juegosGanados($coleccionJuegos){
     
     foreach ($coleccionJuegos as $juego) {
 
-    $puntosX = $juego['puntosCruz'];
-    $puntosO = $juego['puntosCirculo'];
+        $puntosX = $juego['puntosCruz'];
+        $puntosO = $juego['puntosCirculo'];
 
         if ($puntosX != $puntosO) { // Si son diferentes es porque alguno gano.
             $juegosGanados++;
@@ -271,6 +271,45 @@ function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
     return $juegosGanados; // Independientemente del simbolo, ya que lo verificamos con la condicion arriba, retornamos la cantidad de juegos ganados por el simbolo que viene por parametro
 }
 
+
+//$juegoUno = ["jugadorCruz"=> "Sandra" , "jugadorCirculo" => "Mario", "puntosCruz"=> 5, "puntosCirculo" => 0]; // Sandra 
+// $juegoDos= ["jugadorCruz"=> "Mario" , "jugadorCirculo" => "Sandra", "puntosCruz"=> 1, "puntosCirculo" => 1];  // Empate
+    
+
+function ordenadoAlfabeticamente($juegoUno,$juegoDos){
+    
+    
+    $ordenado = 0;
+
+    if($juegoUno["jugadorCirculo"]>$juegoDos["jugadorCirculo"]){
+        $ordenado = 1;
+    }elseif($juegoUno["jugadorCirculo"]<$juegoDos["jugadorCirculo"]){
+        $ordenado = -1;
+    }else{
+        $ordenado = 0;
+    }
+
+    return $ordenado;
+}
+
+function ordenarNombreO ($arrayAordenar){
+
+   uasort($arrayAordenar,"ordenadoAlfabeticamente");
+   print_r($arrayAordenar);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -296,10 +335,13 @@ echo "Juego del TaTeTi"."\n";
 echo "Elija la opcion deseada con el numero correspondiente: "."\n";
 echo "\n";
 
-$opcion = seleccionarOpciones();
+//$opcion = seleccionarOpciones();
 $juegos = cargarJuegos();
 
 do {
+    $opcion = seleccionarOpciones();
+
+
     switch ($opcion) {
         case 1: 
 
@@ -337,8 +379,16 @@ do {
             break;
 
         case 4: 
-            //El usuario eligio la opcion de: 'Mostrar el porcentaje de juegos ganados' 
+            //El usuario eligio la opcion de: 'Mostrar el porcentaje de juegos ganados por X o por 0
+            echo "Eliga el simbolo que desea saber el porcentaje de juegos ganados: ";
             
+            $simboloGanador = eleccionSimboloXO(); 
+            $cantJuegosGanados = juegosGanadosPorSimbolo ($juegos, $simboloGanador);
+            $juegosTotales = count($juegos);
+            $juegosPerdidos = $juegosTotales - $cantJuegosGanados;
+            $porcentajeSimbolo =  $cantJuegosGanados / ($cantJuegosGanados + $juegosPerdidos);
+                                //Juegos ganados / (juegos ganados + juegos perdidos).
+            echo "El simbolo: ".$simboloGanador."gano el: ".$porcentajeSimbolo."%, de los juegos ganados";
             break;   
 
         case 5: 
@@ -360,8 +410,8 @@ do {
         case 6: 
                 //El usuario eligio la opcion de: 'Mostrar listado de juegos ordenados por jugador O'
         
+            ordenarNombreO($juegos);
             break;
     }
-    $opcion = seleccionarOpciones();
 
 } while ($opcion != 7);
