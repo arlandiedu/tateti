@@ -359,10 +359,15 @@ do {
             
             $simboloGanador = eleccionSimboloXO(); 
             $juegosGanadosXsimbolo = juegosGanadosPorSimbolo ($juegos, $simboloGanador);
-            $juegosTotales = count($juegos);
-            $porcentajeSimbolo;
+            $juegosGanadosTotal = juegosGanados($juegos);
+            $porcentajeSimbolo ;
 
-                                //Juegos ganados / (juegos ganados + juegos perdidos).
+            // total juegos 56
+
+            // 40 ganados total      100%
+            // 11 ganados O          X
+
+            // 11*100/40
             echo "El simbolo: ".$simboloGanador."gano el: ".$porcentajeSimbolo."%, de los juegos ganados";
             break;   
 
