@@ -206,13 +206,70 @@ function resumenJugador($coleccionTotal, $nombreJugador) {
     return $resumen;
 }
 
+//               -- OCTAVO PUNTO DEL TRABAJO PRACTICO -- 
+ /**
+  * Solicita al usuario que ingrese X o O y RETORNA el simbolo elegido, en caso de no ser ninguno de los dos simbolos, pide nuevamente.
+  * @return STRING
+  */
+
+  function eleccionSimboloXO(){
+    // STRING $simboloElegido
+
+      echo "Ingrese el simbolo elegido: Cruz (X) o Circulo (O): \n";
+      $simboloElegido = strtoupper(trim(fgets(STDIN))); // Lo hago mayuscula para que la condicion siguiente no tenga problemas por minusculas.
+      
+      while(!($simboloElegido == "X" or $simboloElegido == "O")){ // Cualquier letra que no sea ni X ni O sera rechazada, numeros, caracteres invalidos, etc.
+          echo "Simbolo incorrecto, solo pueden ser Cruz (X) o Circulo (O): \n";
+          $simboloElegido = strtoupper(trim(fgets(STDIN)));
+      }
+
+      return $simboloElegido;
+  }
+
+//               -- NOVENO PUNTO DEL TRABAJO PRACTICO -- 
+/**
+ * Retorna la cantidad de juegos ganados en total de toda la coleccion, si es empate no cuenta.
+ * @param array $coleccionJuegos
+ * @return int 
+ */
+function juegosGanados($coleccionJuegos){
+    // INT $juegosGanados, $puntosX, $puntosO
+
+    $juegosGanados = 0;
+    
+    foreach ($coleccionJuegos as $juego) {
+
+    $puntosX = $juego['puntosCruz'];
+    $puntosO = $juego['puntosCirculo'];
+
+        if ($puntosX != $puntosO) { // Si son diferentes es porque alguno gano.
+            $juegosGanados++;
+        }
+    }
+    
+    return $juegosGanados;
+}
+
+// PUNTO 10
 
 
+function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
+{
+    $juegosGanados = 0;
+    
+    foreach ($coleccionJuegos as $juego) {
+        $puntosX = $juego['puntosCruz'];     
+        $puntosO = $juego['puntosCirculo'];
 
-
-
-
-
+        if ($simbolo == 'X' && $puntosX > $puntosO) { // Si el simbolo que viene por parametro es X y GANA, sumamos ganados
+            $juegosGanados++;
+        } elseif ($simbolo == 'O' && $puntosO > $puntosX) { // Si el simbolo que viene por parametro es O y GANA, sumamos ganados
+            $juegosGanados++;
+        }
+    }
+    
+    return $juegosGanados; // Independientemente del simbolo, ya que lo verificamos con la condicion arriba, retornamos la cantidad de juegos ganados por el simbolo que viene por parametro
+}
 
 // ----------------------------------------------------------------------------------------------------------------------------
 
@@ -249,17 +306,12 @@ do {
             //El usuario eligio la opcion de: 'Jugar al tateti'
 
             $nuevoJuego = jugar();  // Variable que va a guardar cada juego nuevo que el usuario 
-            //$nuevoIndice = count($juegos); // Creamos una nueva variable para asignarle el numero de indice actual, lo hacemos asignandole el return de la funcion count sobre $juegos.
-           // $juegos[$nuevoIndice] = $nuevoJuego; // Aca le agregamos el nuevo juego (elemento) a nuestro array.
-            //imprimirResultado($nuevoJuego)."\n";
-           // echo "Este es el juego numero: ".($nuevoIndice+1)."\n"; // Sumamos uno porque el juego es uno mas que el indice que nosotros tenemos internamente.
-
-            $juegos = agregarJuego($juegos,$nuevoJuego);
-            imprimirResultado($nuevoJuego)."\n";
-            $numJuego = count($juegos);
-            echo "Este es el juego numero: ".($numJuego)."\n"; 
-
+            $juegos = agregarJuego($juegos,$nuevoJuego); // Utilizamos funcion para anadir informacion nueva a nuestro array de coleccion.
+            imprimirResultado($nuevoJuego)."\n"; // Mostramos resultado del match
+            $numJuego = count($juegos); 
+            echo "Este es el juego numero: ".($numJuego)."\n"; // Mostramos informacion extra, en este caso que numero de juego es
             break;
+
         case 2: 
 
             //El usuario eligio la opcion de: 'Mostrar un juego'
@@ -267,13 +319,13 @@ do {
             echo "Ingrese el numero del JUEGO que quiere ver: "."\n";
             $juegoAmostrar = solicitarNumeroEntre(1,count($juegos)); // Uso count para saber la cantidad de indices de los que dispongo en el momento del request
             mostrarDatosJuego($juegos,($juegoAmostrar-1)); // Resto 1 para acceder al indice 0 ya que el usuario no trabajo con indices, solo con el numero del juego. Mi primero juego es el indice 0 y no 1
-            
             break;
+
         case 3: 
             
             //El usuario eligio la opcion de: 'Mostrar el primer juego ganador' 
+
             echo "Escriba el nombre del jugador que desea conocer su primer juego ganador: "."\n";
-            
             $nombreJugador = strtolower(trim(fgets(STDIN))); // Transformo el string en minuscula para comparar en la funcion el nombre que tambien se va a convertir en minuscula y no generar discrepancia.
             $indiceGanador = primerJuegoGanadoxJugador($juegos,$nombreJugador); 
 
@@ -282,14 +334,16 @@ do {
                 }else{
                     echo "El jugador: ".$nombreJugador." nunca ha ganado."."\n";
                 }
-
             break;
+
         case 4: 
             //El usuario eligio la opcion de: 'Mostrar el porcentaje de juegos ganados' 
-
+            
             break;   
+
         case 5: 
                 //El usuario eligio la opcion de: 'Mostrar resumen de jugador' 
+
             echo "Ingresa el nombre del jugador del cual desea un resumen: "."\n";
             $nombreResumen = strtolower(trim(fgets(STDIN))); 
             $arrayResumen = resumenJugador($juegos, $nombreResumen); // Creamos un array asociativo para recibir toda la info que nos retorna la funcion.
@@ -301,7 +355,8 @@ do {
             echo "Empato: " . $arrayResumen["juegosEmpatados"] . " juegos"."\n";
             echo "Total de puntos acumulados: " . $arrayResumen["puntosAcumulados"] . " puntos"."\n";
             echo "*************************************"."\n";
-                // Tengo el problema que no me muestra si gano, perdio o empato en caso de pedir el resumen de un juego nuevo.
+            break;
+
         case 6: 
                 //El usuario eligio la opcion de: 'Mostrar listado de juegos ordenados por jugador O'
         
