@@ -129,30 +129,34 @@ function agregarJuego($coleccion, $juegoAgregar){
 //               -- SEXTO PUNTO DEL TRABAJO PRACTICO -- 
 
 /**  
-* 
+* Funcion que dada una coleccion de juegos y un nombre nos dara si el jugador gano o no gano ninguna partida.
 * @param ARRAY $arrayColeccion 
 * @param STRING $jugadorAnalisar
-* @return 
+* @return INT
 */
 
-// Funcion que dada una coleccion de juegos y un nombre nos dara si el jugador gano o no gano ninguna partida.
+    function primerJuegoGanadoxJugador($coleccionTotal, $jugadorGanador) {
 
-function primerJuegoGanadoxJugador($coleccionTotal, $jugadorGanador){
-
-
-    foreach ($coleccionTotal as $indice => $juego) { // Aca usamos $indice no para indicar el recorrido, sino para usarlo de retorno de nuestra funcion.
-
-        $jugadorX =  strtolower($juego["jugadorCruz"]); // Uso la funcion strtolower como en el programa principal para que el string devuelto se convierta todo a minuscula.
-        $jugadorO =  strtolower($juego["jugadorCirculo"]); // Igual que arriba.
-        $puntosX = $juego["puntosCruz"];
-        $puntosO = $juego["puntosCirculo"];
+        $indice = 0; // Inicializamos el indice ya que usamos while
+        $totalJuegos = count($coleccionTotal); // Contamos los cant. de juegos del array
         
-             if (($jugadorX == $jugadorGanador && $puntosX > $puntosO) || ($jugadorO == $jugadorGanador && $puntosX < $puntosO)) { // Aca verificamos si en la iteracion del bucle, el nombre que dimos por parametro coincide con el del nombre iterado y si gano, siendo X u O
-                 return $indice; // Si gana alguna vez, retornamos el numero del juego ganado (el indice en el que se encuentra)
+        while ($indice < $totalJuegos) {  // Aca usamos while porque solo necesitamos el primer juego que gano, no hace falta que lo recorra todo (Aunque puede terminar haciendolo si gana en el ultimo indice)
+
+            $juego = $coleccionTotal[$indice]; // Obtenemos el juego actual
+            $jugadorX = strtolower($juego["jugadorCruz"]); 
+            $jugadorO = strtolower($juego["jugadorCirculo"]); 
+            $puntosX = $juego["puntosCruz"];
+            $puntosO = $juego["puntosCirculo"];
+            
+            if (($jugadorX == $jugadorGanador && $puntosX > $puntosO) || ($jugadorO == $jugadorGanador && $puntosX < $puntosO)) {
+                return $indice; // En este if, al ganar retornamos el indice en el que lo hizo
+            }
+            
+            $indice++; // Incrementamos el indice (iteradora) para que cicle en un nuevo indice.
         }
+        
+        return -1; // Si nunca gano, retornamos -1
     }
-    return -1; 
-}
 
 //               -- SEPTIMO PUNTO DEL TRABAJO PRACTICO -- 
 
@@ -167,9 +171,9 @@ function primerJuegoGanadoxJugador($coleccionTotal, $jugadorGanador){
 
 function resumenJugador($coleccionTotal, $nombreJugador) {
     
-    $resumen =[// Declaramos un nuevo array para completar la informacion individual del jugador requerido por parametro.
+    $resumen =[                             // Declaramos un nuevo array para completar la informacion individual del jugador requerido por parametro.
         'nombre' => $nombreJugador,
-        'juegosGanados' => 0, // Inicializamos las variables contadora
+        'juegosGanados' => 0, // Inicializamos las variables contadoras
         'juegosPerdidos' => 0, // Contadora
         'juegosEmpatados' => 0, // Contadora
         'puntosAcumulados' => 0 // Acumulable
@@ -382,7 +386,7 @@ do {
             $juegosGanadosXsimbolo = juegosGanadosPorSimbolo($juegos, $simboloGanador);
             $juegosGanadosTotal = juegosGanadosTotal($juegos);
             $porcentajeSimbolo = $juegosGanadosXsimbolo * 100 / $juegosGanadosTotal;
-            echo "El simbolo: ".$simboloGanador." gano el: ".$porcentajeSimbolo."%, de los juegos ganados \n";
+            echo "El simbolo: ".$simboloGanador." gano el: ".$porcentajeSimbolo."%, de los juegos"."\n";
             break;  
             
         case 5: 
