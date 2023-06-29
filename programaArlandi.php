@@ -247,8 +247,7 @@ function juegosGanados($coleccionJuegos){
     return $juegosGanados;
 }
 
-// PUNTO 10
-
+//            -- DECIMO PUNTO DEL TRABAJO PRACTICO -- 
 
 function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
 {
@@ -268,7 +267,7 @@ function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
     return $juegosGanados; // Independientemente del simbolo, ya que lo verificamos con la condicion arriba, retornamos la cantidad de juegos ganados por el simbolo que viene por parametro
 }
 
-// PUNTO 11
+//            -- ONCEAVO PUNTO DEL TRABAJO PRACTICO -- 
     
 
 function ordenadoAlfabeticamente($juegoUno,$juegoDos){
