@@ -44,8 +44,6 @@ function cargarJuegos(){
     $coleccionJuegos[18] = ["jugadorCruz"=> "Lucas" , "jugadorCirculo" => "Sandra", "puntosCruz"=> 0, "puntosCirculo" => 3]; // Sandra
     $coleccionJuegos[19] = ["jugadorCruz"=> "Jenifer" , "jugadorCirculo" => "Violeta", "puntosCruz"=> 1, "puntosCirculo" => 1]; // Empate
 
-    // Mas ganadora sandra, Lucas nunca gano.
-
     return $coleccionJuegos;
 }     
 
@@ -169,13 +167,13 @@ function primerJuegoGanadoxJugador($coleccionTotal, $jugadorGanador){
 
 function resumenJugador($coleccionTotal, $nombreJugador) {
     
-    $resumen = array( // Declaramos un nuevo array para completar la informacion individual del jugador requerido por parametro.
+    $resumen =[// Declaramos un nuevo array para completar la informacion individual del jugador requerido por parametro.
         'nombre' => $nombreJugador,
         'juegosGanados' => 0, // Inicializamos las variables contadora
         'juegosPerdidos' => 0, // Contadora
         'juegosEmpatados' => 0, // Contadora
         'puntosAcumulados' => 0 // Acumulable
-    );
+        ];
 
     foreach ($coleccionTotal as $juego) {
         
@@ -235,11 +233,11 @@ function resumenJugador($coleccionTotal, $nombreJugador) {
 /**
  * Retorna la cantidad de juegos ganados en total de toda la coleccion, si es empate no cuenta.
  * @param array $coleccionJuegos
- * @return int 
+ * @return INT
  */
 
  // Funcion que indica la cantidad de juegos ganados dada una coleccion de juegos. Sin importar que sea X ó O.
-function juegosGanados($coleccionJuegos){
+function juegosGanadosTotal($coleccionJuegos){
     // INT $juegosGanados, $puntosX, $puntosO
 
     $juegosGanados = 0;
@@ -260,7 +258,7 @@ function juegosGanados($coleccionJuegos){
  * 
  * @param array $coleccionJuegos
  * @param string $simbolo
- * @return $juegosGanados 
+ * @return INT
  */
 
  //Dada una colección de juegos y un símbolo (X ó O) retorne la cantidad de juegos ganados por el símbolo.
@@ -268,19 +266,15 @@ function juegosGanados($coleccionJuegos){
 function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
 {
     $juegosGanados = 0;
-    $juegosXGanados = 0;
-    $juegosOGanados = 0;
-    
+
     foreach ($coleccionJuegos as $juego) {
         $puntosX = $juego['puntosCruz'];     
         $puntosO = $juego['puntosCirculo'];
 
-        if ($simbolo == 'X' && $puntosX > $puntosO) { // Si el simbolo que viene por parametro es X y GANA, sumamos ganados
+        if ($simbolo == 'X' && $puntosX > $puntosO){ // Si el simbolo que viene por parametro es X y GANA, sumamos ganados
             $juegosGanados++;
-            $juegosXGanados++;
-        } elseif ($simbolo == 'O' && $puntosO > $puntosX) { // Si el simbolo que viene por parametro es O y GANA, sumamos ganados
+        }elseif($simbolo == 'O' && $puntosO > $puntosX){ // Si el simbolo que viene por parametro es O y GANA, sumamos ganados
             $juegosGanados++;
-            $juegosOGanados++;
         }
     }
     
@@ -293,7 +287,7 @@ function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo)
  * Dada una colección de juegos, muestre la colección de juegos ordenado por el nombre del jugador cuyo símbolo es O.
  * @param  $juegoUno
  * @param  $juegoDos
- * @return $ordenado
+ * @return INT
  */
 
 function ordenadoAlfabeticamente($juegoUno,$juegoDos){
@@ -337,13 +331,13 @@ echo "Juego del TaTeTi"."\n";
 echo "Elija la opcion deseada con el numero correspondiente: "."\n";
 echo "\n";
 
-//$opcion = seleccionarOpciones();
-$juegos = cargarJuegos();
+$juegos = cargarJuegos(); // Cargamos la coleccion de juegos de ejemplo.
 
 do {
     $opcion = seleccionarOpciones();
 
     // Switch es una estructura de control que permite ejecutar diferentes lineas de codigo segun el valor de la expresion.
+
     switch ($opcion) {
         case 1: 
 
@@ -363,7 +357,7 @@ do {
             echo "Ingrese el numero del JUEGO que quiere ver: "."\n";
             $juegoAmostrar = solicitarNumeroEntre(1,count($juegos)); // Uso count para saber la cantidad de indices de los que dispongo en el momento del request
             mostrarDatosJuego($juegos,($juegoAmostrar-1)); // Resto 1 para acceder al indice 0 ya que el usuario no trabajo con indices, solo con el numero del juego. Mi primero juego es el indice 0 y no 1
-            break; //se utiliza para salir del switch después de cada caso.
+            break; 
 
         case 3: 
             
@@ -378,33 +372,19 @@ do {
                 }else{
                     echo "El jugador: ".$nombreJugador." nunca ha ganado."."\n";
                 }
-            break; //se utiliza para salir del switch después de cada caso.
+            break;
 
         case 4: 
             //El usuario eligio la opcion de: 'Mostrar el porcentaje de juegos ganados por X o por 0
             echo "Eliga el simbolo que desea saber el porcentaje de juegos ganados: ";
         
             $simboloGanador = eleccionSimboloXO(); 
-            $juegosGanadosXsimbolo = juegosGanadosPorSimbolo ($juegos, $simboloGanador);
-            $juegosGanadosTotal = juegosGanados($juegos);
-            $porcentajeSimbolo = 0;
-            
-            //todavia no funciona (linea 280 y 283 agregue variables) 
-            if  ($simboloGanador=="x"){
-                $porcentajeSimbolo = (($juegosXGanados * 100 )/$juegosGanadosTotal);
-            }elseif ($simboloGanador=="o"){
-                $porcentajeSimbolo = (($juegosOGanados * 100 )/$juegosGanadosTotal);
-            }
-
-            // total juegos 56
-
-            // 40 ganados total      100%
-            // 11 ganados O          X
-
-            // 11*100/40
+            $juegosGanadosXsimbolo = juegosGanadosPorSimbolo($juegos, $simboloGanador);
+            $juegosGanadosTotal = juegosGanadosTotal($juegos);
+            $porcentajeSimbolo = $juegosGanadosXsimbolo * 100 / $juegosGanadosTotal;
             echo "El simbolo: ".$simboloGanador." gano el: ".$porcentajeSimbolo."%, de los juegos ganados \n";
-            break;  //se utiliza para salir del switch después de cada caso.
-
+            break;  
+            
         case 5: 
                 //El usuario eligio la opcion de: 'Mostrar resumen de jugador' 
 
@@ -419,16 +399,17 @@ do {
             echo "Empato: " . $arrayResumen["juegosEmpatados"] . " juegos"."\n";
             echo "Total de puntos acumulados: " . $arrayResumen["puntosAcumulados"] . " puntos"."\n";
             echo "*************************************"."\n";
-            break; //se utiliza para salir del switch después de cada caso.
+            break; 
 
         case 6: 
                 //El usuario eligio la opcion de: 'Mostrar listado de juegos ordenados por jugador O'
         
             ordenarNombreO($juegos);
-            break; //se utiliza para salir del switch después de cada caso.
+            break; 
     }
 
 } while ($opcion != 7);
 
 // repetira mientras la opcion elegida sea distinta a "7".
+
 
