@@ -60,14 +60,15 @@ include_once("tateti.php");
 function seleccionarOpciones(){
 /* INT $opcionUserValido, ARRAY $menu */
 
-$menu = [
-    1 => "Jugar al tateti",
-    2 => "Mostrar un juego",
-    3 => "Mostrar el primer juego ganador",
-    4 => "Mostrar el porcentaje de juegos ganados",
-    5 => "Mostrar resumen de jugador",
-    6 => "Mostrar listado de juegos ordenados por jugador O",
-    7 => "Salir"
+                                                         // Array indexeado
+    $menu = [
+        1 => '  Jugar al tateti',
+        2 => '  Mostrar un juego',
+        3 => '  Mostrar el primer juego ganador',
+        4 => '  Mostrar el porcentaje de juegos ganados',
+        5 => '  Mostrar resumen de jugador',
+        6 => '  Mostrar listado de juegos ordenados por jugador O',
+        7 => '  Salir'
     ];
 
     foreach ($menu as $indice => $opcion) {
@@ -92,7 +93,7 @@ $menu = [
  //                -- CUARTO PUNTO DEL TRABAJO PRACTICO -- 
 
 /**  
- * Recibimos por usuario el numero del juego solicitado junto con el array y terminamos mostrando por pantalla datos de interes.
+ * Recibimos por usuario el numero del juego solicitado junto con el array a analizar y MOSTRAMOS POR PANTALLA datos del juego.
 * @param ARRAY $listadeArrays
 * @param INT $indiceJuego
 * @return void
@@ -112,7 +113,7 @@ $resultado = "";
     }
 
 echo "********************"."\n";
-echo "Juego de tateti numero: ".($indiceJuego+1)."     ($resultado)"."\n"; // Aca sumo para devlover al usuario el numero del juego real y no mi indice .
+echo "Juego de tateti numero: ".($indiceJuego+1)."     ($resultado)"."\n"; // Aca sumo para devolver al usuario el numero del juego real y no mi indice.
 echo "Jugador X: ".$listadeArrays[$indiceJuego]["jugadorCruz"]." obtuvo ".$listadeArrays[$indiceJuego]["puntosCruz"]." puntos"."\n";
 echo "Jugador O: ".$listadeArrays[$indiceJuego]["jugadorCirculo"]." obtuvo ".$listadeArrays[$indiceJuego]["puntosCirculo"]." puntos"."\n";
 echo "********************"."\n";
@@ -121,7 +122,7 @@ echo "********************"."\n";
 //               -- QUINTO PUNTO DEL TRABAJO PRACTICO -- 
 
 /**  
-* Recibimos como parametro dos arrays, uno que contiene la coleccion de juegos y otro con datos de un nuevo juego para RETORNAR la coleccion modificada con el nuevo juego
+* Recibimos como parametro dos arrays, uno que contiene la coleccion de juegos y otro con datos de un nuevo juego para RETORNAR la coleccion modificada con el nuevo juego.
 * @param ARRAY $coleccion
 * @param ARRAY $juegoAgregar
 * @return ARRAY
@@ -150,7 +151,8 @@ function agregarJuego($coleccion, $juegoAgregar){
 
     $indice = 0;                                             // Inicializamos el indice ya que usamos while
     $totalJuegos = count($coleccionTotal);                  // Contamos los cant. de juegos del array
-        
+    $indiceGanadoroPerdedor = -1; 
+
     while ($indice < $totalJuegos){         // Aca usamos while porque solo necesitamos el primer juego que gano, no hace falta que lo recorra todo (Aunque puede terminar haciendolo si gana en el ultimo indice)
 
         $juego = $coleccionTotal[$indice];                  // Obtenemos el juego actual
@@ -160,18 +162,19 @@ function agregarJuego($coleccion, $juegoAgregar){
         $puntosO = $juego["puntosCirculo"];
             
             if (($jugadorX == $jugadorGanador && $puntosX > $puntosO) || ($jugadorO == $jugadorGanador && $puntosX < $puntosO)){
-                return $indice;                          // En este if, al ganar retornamos el indice en el que lo hizo
+                
+                $indiceGanadoroPerdedor = $indice;
+                return $indiceGanadoroPerdedor;              
             }
-            
-            $indice++;                                  // Incrementamos el indice (que actua como iteradora) para que cicle en un nuevo indice.
-        }
-        
-        return -1;                                      // Si nunca gano, retornamos -1
+            $indice++;                                  
     }
+        
+     return $indiceGanadoroPerdedor;         // Si no hay indice ganador, queda en -1 como se inicializo.
+}
 
 //               -- SEPTIMO PUNTO DEL TRABAJO PRACTICO -- 
 
-/** Funcion que dada una coleccion de juegos y un nombre nos dara un resumen del jugador
+/** Funcion que dada una coleccion de juegos y un nombre nos RETORNARA un resumen del jugador en formato array.
  * (Juegos ganados, juegos perdidos, juegos empatados y puntos acumulados en total)
 * @param ARRAY $coleccionTotal
 * @param STRING $nombreJugador
@@ -245,7 +248,7 @@ return $resumen;
             //               -- NOVENO PUNTO DEL TRABAJO PRACTICO -- 
 
 /**
- * Retorna la cantidad de juegos ganados en total de toda la coleccion, si es empate no cuenta.
+ * RETORNA la cantidad de juegos ganados en total de toda la coleccion, si es empate no cuenta.
  * @param array $coleccionJuegos
  * @return INT
  */
@@ -319,7 +322,7 @@ function ordenAlfabetico($juegoUno,$juegoDos){
 }
 
 /**
- * Ordena un array con la funcion uasort, en este caso el orden es alfabetico y lo determinamos con una funcion anterior (ordenAlfabetico)
+ * Ordena un array con la funcion uasort, en este caso el orden es alfabetico (ordenAlfabetico) y MUESTRA EN PANTALLA el array ordenado.
  * @param ARRAY $arrayAordenar
  * @return void
  */
@@ -345,6 +348,13 @@ ARRAY $juegos, $nuevoJuego
 STRING $nombreJugador, $simboloGanador, $nombreResumen
 FLOAT $porcentajeSimbolo
 */
+                                        //Funciones predefinidas por PHP usadas:
+
+// ucfirst(); Convierte la primera Letra de una secuencia string en mayuscula (ejemplo => Ejemplo)
+// strtolower(); Convierte una cadena de string en minuscula (eJeMpLo => ejemplo)
+// uasort (); Ordena un array con una function que determina antes el usuario (Alfabeticamente en este caso)
+// count (); Cuenta el número de elementos en un array.
+// include_once (); Se utiliza para incluir y ejecutar un archivo PHP en el código actual. (En este caso, tateti.php)
 
                                         //Inicialización de variables:
 
@@ -358,9 +368,11 @@ echo "\n";
 do {
     $opcion = (int)seleccionarOpciones();             // Aca uso int por si el usuario ingresa un numero entre 1 y 7 pero con coma, no es una funcion, solo actua como convertidor a INT (entero)
 
+
     // Switch es una estructura de control que permite ejecutar diferentes lineas de codigo segun el valor de la expresion.
 
-    switch ($opcion) {
+
+    switch ($opcion){
         case 1: 
 
             //El usuario eligio la opcion de: 'Jugar al tateti'
@@ -390,16 +402,16 @@ do {
             $indiceGanador = primerJuegoGanadoxJugador($juegos,$nombreJugador); 
 
                 if($indiceGanador!=-1){
-                    mostrarDatosJuego($juegos,$indiceGanador)."\n";
+                    mostrarDatosJuego($juegos,$indiceGanador)."\n";          // Si no gano, nos devuelve -1 y mostramos el mensaje de que nunca gano, sino mostramos los datos del juego segun el indice retornado.
                 }else{
-                    echo "El jugador: ".$nombreJugador." nunca ha ganado."."\n";
+                    echo "El jugador: ".ucfirst($nombreJugador)." nunca ha ganado."."\n";
                 }
             break;
 
         case 4: 
             //El usuario eligio la opcion de: 'Mostrar el porcentaje de juegos ganados por X o por 0
 
-            echo "Eliga el simbolo que desea saber el porcentaje de juegos ganados: ";
+            echo "Eliga el simbolo del que desea saber el porcentaje de juegos ganados: ";
 
             $simboloGanador = eleccionSimboloXO(); 
             $juegosGanadosXsimbolo = juegosGanadosPorSimbolo($juegos, $simboloGanador);
@@ -417,7 +429,7 @@ do {
             $arrayResumen = resumenJugador($juegos, $nombreResumen); // Creamos un array asociativo para recibir toda la info que nos retorna la funcion.
 
                 echo "*************************************"."\n";
-                echo "Jugador: " .$arrayResumen['nombre']."\n";
+                echo "Jugador: " .ucfirst($arrayResumen['nombre'])."\n";
                 echo "Gano: " . $arrayResumen['juegosGanados'] . " juegos"."\n";
                 echo "Perdio: " . $arrayResumen['juegosPerdidos'] . " juegos"."\n";
                 echo "Empato: " . $arrayResumen['juegosEmpatados'] . " juegos"."\n";
