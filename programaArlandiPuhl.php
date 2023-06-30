@@ -58,15 +58,21 @@ include_once("tateti.php");
 */
 
 function seleccionarOpciones(){
-/* INT $opcionUserValido */
+/* INT $opcionUserValido, ARRAY $menu */
 
-    echo "1) Jugar al tateti"."\n";
-    echo "2) Mostrar un juego"."\n";
-    echo "3) Mostrar el primer juego ganador"."\n";
-    echo "4) Mostrar el porcentaje de juegos ganados"."\n";
-    echo "5) Mostrar resumen de jugador"."\n";
-    echo "6) Mostrar listado de juegos ordenados por jugador O"."\n";
-    echo "7) Salir!"."\n";
+$menu = [
+    1 => "Jugar al tateti",
+    2 => "Mostrar un juego",
+    3 => "Mostrar el primer juego ganador",
+    4 => "Mostrar el porcentaje de juegos ganados",
+    5 => "Mostrar resumen de jugador",
+    6 => "Mostrar listado de juegos ordenados por jugador O",
+    7 => "Salir"
+    ];
+
+    foreach ($menu as $indice => $opcion) {
+        echo $indice.") ".$opcion."\n";
+    }
 
     $opcionUserValido = solicitarNumeroEntre(1,7);                  // Reutilizamos la funcion del archivo tateti.php
 
