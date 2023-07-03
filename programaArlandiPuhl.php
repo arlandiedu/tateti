@@ -24,7 +24,7 @@ include_once("tateti.php");
  function cargarJuegos(){
  /* ARRAY $coleccionJuegos */
 
-         $coleccionJuegos[0] = ['jugadorCruz'=> 'Ana' , 'jugadorCirculo' => 'Bruno', 'puntosCruz'=> 5, 'puntosCirculo' => 0];               // Ana 
+   /*      $coleccionJuegos[0] = ['jugadorCruz'=> 'Ana' , 'jugadorCirculo' => 'Bruno', 'puntosCruz'=> 5, 'puntosCirculo' => 0];               // Ana 
          $coleccionJuegos[1] = ['jugadorCruz'=> 'Carla' , 'jugadorCirculo' => 'Damian', 'puntosCruz'=> 1, 'puntosCirculo' => 1];            // Empate
          $coleccionJuegos[2] = ['jugadorCruz'=> 'Edgardo' , 'jugadorCirculo' => 'Fabiana', 'puntosCruz'=> 2, 'puntosCirculo' => 0];         // Edgardo
          $coleccionJuegos[3] = ['jugadorCruz'=> 'Graciela' , 'jugadorCirculo' => 'Horacio', 'puntosCruz'=> 1, 'puntosCirculo' => 1];        // Empate
@@ -44,7 +44,22 @@ include_once("tateti.php");
          $coleccionJuegos[17] = ['jugadorCruz'=> 'Ana' , 'jugadorCirculo' => 'Ivan', 'puntosCruz'=> 0, 'puntosCirculo' => 5];               // Ivan
          $coleccionJuegos[18] = ['jugadorCruz'=> 'Horacio' , 'jugadorCirculo' => 'Ana', 'puntosCruz'=> 0, 'puntosCirculo' => 3];            // Ana
          $coleccionJuegos[19] = ['jugadorCruz'=> 'Bruno' , 'jugadorCirculo' => 'Julieta', 'puntosCruz'=> 1, 'puntosCirculo' => 1];          // Empate
- 
+ */
+        $coleccionJuegos = [];
+
+    $jg1 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 1, "puntosCirculo" => 1];
+   /* $jg2 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "AMARILIS", "puntosCruz" => 3, "puntosCirculo" => 0];
+    $jg3 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "MILOS",    "puntosCruz" => 0, "puntosCirculo" => 4];
+    $jg4 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
+    $jg5 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 5, "puntosCirculo" => 0];
+    $jg6 = ["jugadorCruz" => "FEDORA",   "jugadorCirculo" => "CALIXTO",  "puntosCruz" => 0, "puntosCirculo" => 3];
+    $jg7 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "AMARILIS", "puntosCruz" => 4, "puntosCirculo" => 0];
+    $jg8 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
+    $jg9 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "FEDORA",   "puntosCruz" => 2, "puntosCirculo" => 0];
+    $jg10 = ["jugadorCruz" => "MILOS",    "jugadorCirculo" => "ZENDA",   "puntosCruz" => 1, "puntosCirculo" => 1];*/
+
+ array_push($coleccionJuegos, $jg1, /*$jg2, $jg3, $jg4, $jg5, $jg6, $jg7, $jg8, $jg9, $jg10*/);
+
     return $coleccionJuegos;
  }
 
@@ -138,7 +153,7 @@ function agregarJuego($coleccion, $juegoAgregar){
 //               -- SEXTO PUNTO DEL TRABAJO PRACTICO -- 
 
 /**  
-* Funcion que dada una coleccion de juegos y un nombre nos RETORNA si el jugador gano alguna partida.
+* Funcion que dada una coleccion de juegos y un nombre nos RETORNE el indice si el jugador gano alguna vez o -1 si nunca gano 
 * @param ARRAY $arrayColeccion 
 * @param STRING $jugadorAnalisar
 * @return INT
@@ -153,7 +168,7 @@ function agregarJuego($coleccion, $juegoAgregar){
     $totalJuegos = count($coleccionTotal);                  // Contamos los cant. de juegos del array
     $indiceGanadoroPerdedor = -1; 
 
-    while ($indice < $totalJuegos){         // Aca usamos while porque solo necesitamos el primer juego que gano, no hace falta que lo recorra todo (Aunque puede terminar haciendolo si gana en el ultimo indice)
+    while ($indice < $totalJuegos && $indiceGanadoroPerdedor <> $indice){         // Aca usamos while porque solo necesitamos el primer juego que gano, no hace falta que lo recorra todo (Aunque puede terminar haciendolo si gana en el ultimo indice)
 
         $juego = $coleccionTotal[$indice];                  // Obtenemos el juego actual
         $jugadorX = strtolower($juego["jugadorCruz"]); 
@@ -164,13 +179,12 @@ function agregarJuego($coleccion, $juegoAgregar){
             if (($jugadorX == $jugadorGanador && $puntosX > $puntosO) || ($jugadorO == $jugadorGanador && $puntosX < $puntosO)){
                 
                 $indiceGanadoroPerdedor = $indice;
-                return $indiceGanadoroPerdedor;              
             }
-            $indice++;                                  
-    }
-        
-     return $indiceGanadoroPerdedor;         // Si no hay indice ganador, queda en -1 como se inicializo.
+        $indice++; 
+        }              
+    return $indiceGanadoroPerdedor; 
 }
+
 
 //               -- SEPTIMO PUNTO DEL TRABAJO PRACTICO -- 
 
@@ -416,9 +430,13 @@ do {
             $simboloGanador = eleccionSimboloXO(); 
             $juegosGanadosXsimbolo = juegosGanadosPorSimbolo($juegos, $simboloGanador);
             $juegosGanadosTotal = juegosGanadosTotal($juegos);
+            if ($juegosGanadosTotal != 0){
             $porcentajeSimbolo = $juegosGanadosXsimbolo * 100 / $juegosGanadosTotal;
-
             echo "El simbolo: ".$simboloGanador." gano el: ".$porcentajeSimbolo."%, de los juegos"."\n";
+            }else{
+                echo "Todavia no hay ningun juego ganado como para determinar el porcentaje de: ".$simboloGanador."\n";
+            }
+
             break;  
             
         case 5: 
@@ -447,5 +465,4 @@ do {
 } while ($opcion != 7);
 
 // Repetira mientras la opcion elegida sea distinta a "7".
-
 
