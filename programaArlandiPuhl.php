@@ -48,7 +48,7 @@ include_once("tateti.php");
         $coleccionJuegos = [];
 
     $jg1 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 1, "puntosCirculo" => 1];
-   /* $jg2 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "AMARILIS", "puntosCruz" => 3, "puntosCirculo" => 0];
+    $jg2 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "AMARILIS", "puntosCruz" => 3, "puntosCirculo" => 0];
     $jg3 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "MILOS",    "puntosCruz" => 0, "puntosCirculo" => 4];
     $jg4 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
     $jg5 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 5, "puntosCirculo" => 0];
@@ -56,9 +56,9 @@ include_once("tateti.php");
     $jg7 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "AMARILIS", "puntosCruz" => 4, "puntosCirculo" => 0];
     $jg8 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
     $jg9 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "FEDORA",   "puntosCruz" => 2, "puntosCirculo" => 0];
-    $jg10 = ["jugadorCruz" => "MILOS",    "jugadorCirculo" => "ZENDA",   "puntosCruz" => 1, "puntosCirculo" => 1];*/
+    $jg10 = ["jugadorCruz" => "MILOS",    "jugadorCirculo" => "ZENDA",   "puntosCruz" => 1, "puntosCirculo" => 1];
 
- array_push($coleccionJuegos, $jg1, /*$jg2, $jg3, $jg4, $jg5, $jg6, $jg7, $jg8, $jg9, $jg10*/);
+ array_push($coleccionJuegos, $jg1, $jg2, $jg3, $jg4, $jg5, $jg6, $jg7, $jg8, $jg9, $jg10);
 
     return $coleccionJuegos;
  }
@@ -153,7 +153,7 @@ function agregarJuego($coleccion, $juegoAgregar){
 //               -- SEXTO PUNTO DEL TRABAJO PRACTICO -- 
 
 /**  
-* Funcion que dada una coleccion de juegos y un nombre nos RETORNE el indice si el jugador gano alguna vez o -1 si nunca gano 
+* Funcion que dada una coleccion de juegos y un nombre nos RETORNE el indice en el cual el jugador gano alguna vez o -1 si nunca gano 
 * @param ARRAY $arrayColeccion 
 * @param STRING $jugadorAnalisar
 * @return INT
@@ -430,12 +430,12 @@ do {
             $simboloGanador = eleccionSimboloXO(); 
             $juegosGanadosXsimbolo = juegosGanadosPorSimbolo($juegos, $simboloGanador);
             $juegosGanadosTotal = juegosGanadosTotal($juegos);
-            if ($juegosGanadosTotal != 0){
-            $porcentajeSimbolo = $juegosGanadosXsimbolo * 100 / $juegosGanadosTotal;
-            echo "El simbolo: ".$simboloGanador." gano el: ".$porcentajeSimbolo."%, de los juegos"."\n";
-            }else{
-                echo "Todavia no hay ningun juego ganado como para determinar el porcentaje de: ".$simboloGanador."\n";
-            }
+                 if ($juegosGanadosTotal != 0){
+                    $porcentajeSimbolo = $juegosGanadosXsimbolo * 100 / $juegosGanadosTotal;
+                    echo "El simbolo: ".$simboloGanador." gano el: ".$porcentajeSimbolo."%, de los juegos"."\n";
+                }else{
+                    echo "Todavia no hay ningun juego ganado como para determinar el porcentaje de: ".$simboloGanador."\n";
+                }
 
             break;  
             
